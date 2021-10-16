@@ -14,7 +14,10 @@ namespace LibApp_Gr3.Controllers
         {
             var firstBook = new Book() { Name = "English dictionary" };
 
-            return View(firstBook);
+            //ViewData["Book"] = firstBook;
+            ViewBag.Book = firstBook;
+
+            return View();
         }
 
         public IActionResult Edit(int bookId)
