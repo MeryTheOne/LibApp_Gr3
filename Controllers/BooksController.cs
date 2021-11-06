@@ -4,16 +4,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LibApp_Gr3.Models;
+using LibApp_Gr3.ViewModels;
 
 namespace LibApp_Gr3.Controllers
 {
     public class BooksController : Controller
     {
-        // GET/Books/Random
         public IActionResult Random()
         {
             var firstBook = new Book() { Name = "English dictionary" };
-            return View(firstBook);
+
+            var customers = new List<Customer>
+            {
+                new Customer {Name = "Customer 1"},
+                new Customer {Name = "Customer 2"}
+            };
+
+            var viewModel = new RandomBookViewModel
+            {
+                Book = firstBook,
+                Customers = customers
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Edit(int bookId)
@@ -35,8 +48,8 @@ namespace LibApp_Gr3.Controllers
 
             return Content($"pageIndex={pageIndex}&sortBy={sortBy}");
         }
-        
-        [Route("books/released/{year:regex(^\\d{{4}}$)}/{month:range(1,12)}")]
+
+        [Route("books/released/{year:regex(^\\d{{4}}$)}/{month:range(1, 12)}")]
         public IActionResult ByReleaseDate(int year, int month)
         {
             return Content(year + "/" + month);
